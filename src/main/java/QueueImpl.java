@@ -3,37 +3,40 @@ public class QueueImpl<E> implements Queue<E>{
     private int p;
 
     public QueueImpl(int len) {
-        // TO-DO
-        this.data = (E[])new Object[len];
+        this.data = (E[]) new Object[len];
+        this.p = 0;
     }
 
     public void push(E e) throws FullQueueException {
-        // TO-DO
         if (isFull()) throw new FullQueueException();
 
-        this.data[this.p++]=e;
-
+        this.data[this.p] = e;
+        this.p++;
     }
 
 
     public E pop() throws EmptyQueueException {
-        // TO-DO
-        return null;
+        if (isEmpty()) throw new EmptyQueueException();
+
+        E e = this.data[0];
+
+        for (int i = 1; i < this.p; i++) {
+            this.data[i - 1] = this.data[i];
+        }
+        this.p--;
+        this.data[this.p] = null;
+        return e;
     }
 
     private boolean isFull() {
-        // TO-DO
-        //return this.p == this.data.length;
-        return false;
+        return this.p == this.data.length;
     }
 
     private boolean isEmpty() {
-        // TO-DO
-        return false;
+        return this.p == 0;
     }
 
     public int size() {
-        //TO-DO
         return this.p;
     }
 }
